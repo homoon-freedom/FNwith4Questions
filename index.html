@@ -198,6 +198,8 @@
         }
         .btn-save-local { background: #3ecf8e; color: white; flex: 1.0; padding: 12px; font-size: 15px; }
         .btn-image { background: var(--primary-blue); color: white; flex: 1.0; padding: 12px; font-size: 15px; }
+        /* 뒤집기 탭 전용 테마 인지용 이미지 버튼 분리 스타일 */
+        .btn-work-image { background: var(--work-primary) !important; }
         
         #previewBox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; z-index: 4000; padding: 20px; }
         #previewImg { max-width: 100%; max-height: 70%; border-radius: 10px; object-fit: contain; }
@@ -382,11 +384,10 @@
 
 <!-- 2. The Work (작업) 섹션 -->
 <section id="work-section" class="content-section">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 0 40px 0; box-sizing: border-box; width: 100%;">
-        
+    <div id="capture-work">
         <!-- 조사 기본 컨텍스트 실시간 연동 카드 -->
         <div class="record-card" style="border-top: 5px solid var(--work-dark);">
-            <div class="record-card-title">0. 조사할 기본 생각 대상</div>
+            <div class="record-card-title" id="work-img-header-title">0. 조사할 기본 생각 대상</div>
             <div class="record-card-desc">🔗 마음 관찰 기록의 <span style="color:var(--accent-blue); font-weight:bold;">'사건 인식'</span>과 <span style="color:var(--danger-red); font-weight:bold;">'생각들'</span>이 실시간 바인딩됩니다.</div>
             <span class="section-label">바인딩된 사건 사실</span>
             <textarea id="work-context-event" readonly style="background-color: #f1f5f9; color: #566a7f; cursor: not-allowed; min-height: 50px;"></textarea>
@@ -477,11 +478,11 @@
                 <textarea id="work-turnaround" placeholder="예: '그가 나를 무시한다' -> '내가 나를 무시한다' / '내가 그를 무시한다' / '그는 나를 존중한다'"></textarea>
             </div>
         </div>
+    </div>
 
-        <!-- 탭 하단 리셋 제어 액션 단추 -->
-        <div style="padding: 0 15px;">
-            <button class="copy-btn" style="background-color: var(--danger-red); font-weight: 800;" onclick="resetWorkFields()">🔄 해당 사건의 'The Work' 내용 초기화</button>
-        </div>
+    <!-- 탭 하단 리셋 제어 액션 단추 -->
+    <div style="padding: 0 15px; margin-top: 5px;">
+        <button class="copy-btn" style="background-color: var(--danger-red); font-weight: 800;" onclick="resetWorkFields()">🔄 해당 사건의 'The Work' 내용 초기화</button>
     </div>
 </section>
 
@@ -508,7 +509,9 @@
 <!-- 통합 공통 하단 제어 바 고정 -->
 <div class="fixed-bottom-bar" id="fixedBottomBar">
     <button class="btn-save-local" onclick="triggerManualSave()">💾 클라우드저장</button>
-    <button class="btn-image" id="shareBtn" onclick="makeImage()">❤️ 이미지 공유</button>
+    <!-- 분리 배치 구동 엔진 장착 -->
+    <button class="btn-image" id="shareBtn" onclick="makeImage()">❤️ 기록 이미지 공유</button>
+    <button class="btn-image btn-work-image" id="shareWorkBtn" style="display:none;" onclick="makeWorkImage()">💙 작업 이미지 공유</button>
 </div>
 
 <div id="previewBox">
@@ -607,7 +610,7 @@ const emotionsData = [
     { name: "기쁘다", cat: "cat-joy", desc: "마음먹은 대로 일이 잘되거나, 원하던 상황이 이루어져서 마음이 즐겁고 흐뭇한 상태", sit: "목표 달성이나 축하를 들었을 때", body: "가슴이 벅차오르고 입가에 미소가 번지며 몸이 가벼워짐", aff: "이 기쁨을 충분히 누리며 나를 축하합니다." },
     { name: "감사하다", cat: "cat-joy", desc: "선의를 발견하고 마음이 따뜻하게 열리는 상태", sit: "배려를 경험하거나 평화를 깨달았을 때", body: "가슴 부위가 훈훈해지고 어깨의 긴장이 스르르 풀림", aff: "세상이 건네는 모든 친절에 감사합니다." },
     { name: "행복하다", cat: "cat-joy", desc: "만족을 느끼며 내면이 훈훈하게 가득 찬 상태", sit: "사랑하는 이들과 함께하는 순간", body: "온몸에 따뜻한 에너지가 퍼지고 호흡이 깊고 편안해짐", aff: "나는 지금 이 순간 행복할 자격이 있습니다." },
-    { name: "감동하다", cat: "cat-joy", desc: "타인의 진심을 마주하여 가슴이 뭉클해지는 떨림", sit: "명장면이나 희생을 보았을 때", body: "콧날이 시큰해지거나 가슴 중앙이 조여오는 듯한 뭉클함", aff: "내 마음을적시는 따뜻한 떨림을 소중히 여깁니다." },
+    { name: "감동하다", cat: "cat-joy", desc: "타인의 진심을 마주하여 가슴이 뭉클해지는 떨림", sit: "명장면이나 희생을 보았을 때", body: "콧날이 시큰해지거나 가슴 중앙이 조여오는 듯한 뭉클함", aff: "내 마음을 적시는 따뜻한 떨림을 소중히 여깁니다." },
     { name: "만족하다", cat: "cat-joy", desc: "마음이 넉넉해져 있는 그대로를 긍정하는 여유", sit: "몰두한 일을 마친 뒤 쉴 때", body: "몸의 모든 근육이 이완되고 미각이나 후각이 예민해짐", aff: "나는 이미 충분하며 지금 이대로 만족합니다." },
     { name: "든든하다", cat: "cat-joy", desc: "믿을 수 있는 지지가 있음을 확인한 강인함", sit: "나를 믿어주는 사람의 격려를 받았을 때", body: "척추가 곧게 펴지는 느낌과 함께 아랫배에 힘이 들어감", aff: "소중한 존재들이 나를 지켜줍니다." },
     { name: "자랑스럽다", cat: "cat-joy", desc: "이뤄낸 성취를 대견하게 여기는 마음", sit: "어려운 도전을 끝내거나 성장을 볼 때", body: "어깨가 펴지고 고개가 들리며 심장이 힘차게 뜀", aff: "나는 나의 노력을 진심으로 자랑스러워합니다." },
@@ -653,7 +656,7 @@ const emotionsData = [
     { name: "속상하다", cat: "cat-ang", desc: "#슬픔과 화가 미묘하게 섞인 상태", sit: "가깝고 친한 이가 나의 배려를 무시할 때", body: "코끝이 찡해지고 가슴 중앙이 아릿하게 저려옴", aff: "나는 존중받을 자격이 있습니다." },
     { name: "서운하다", cat: "cat-sad", desc: "연결이 부족해 씁쓸함이 남는 상태", sit: "특별한 날을 잊었거나 무관심할 때", body: "입꼬리가 처지고 가슴이 텅 빈 듯한 허전함이 느껴짐", aff: "서운함은 더 사랑받고 싶은 마음입니다." },
     { name: "외롭다", cat: "cat-sad", desc: "이해받지 못해 섬처럼 느껴지는 쓸쓸함", sit: "군중 속이나 혼자 남겨진 밤", body: "팔다리가 차갑게 느껴지고 몸이 작아지는 듯한 오한", aff: "나는 나 자신과 먼저 친해지겠습니다." },
-    { name: "슬프다", cat: "cat-sad", desc: "상실의 아픔을 수용하고 정화하는 애도", sit: "이별이나 아픈 진실을 마주할 때", body: "눈시울이 뜨거워지고 온몸에 힘이 빠지며 가슴이 무거움", aff: "눈물은 상처 입은 마음을 씻어줍니다." },
+    { name: "슬프다", cat: "cat-sad", desc: "상실의 아픔을 수용하고 정화하는 애도", sit: "이별한 이의 유품이나 흔적을 볼 때", body: "눈시울이 뜨거워지고 온몸에 힘이 빠지며 가슴이 무거움", aff: "눈물은 상처 입은 마음을 씻어줍니다." },
     { name: "소외되다", cat: "cat-sad", desc: "연결감을 잃고 단절된 듯한 마음", sit: "모임에 초대받지 못하거나 대화에 낄 수 없을 때", body: "목이 메이고 가슴 부근이 싸늘하게 식는 느낌", aff: "나는 그 자체로 소중하며 진정한 곳을 찾을 것입니다." },
     { name: "우울하다", cat: "cat-sad", desc: "에너지가 낮아져 마음이 무거운 상태", sit: "무력감이 지속되거나 단절된 느낌일 때", body: "눈꺼풀이 무겁고 온몸이 젖은 솜처럼 바닥으로 가라앉음", aff: "이 또한 날씨일 뿐입니다. 해는 뜹니다." },
     { name: "무기력하다", cat: "cat-sad", desc: "아무것도 할 힘이 없어 에너지가 바닥난 상태", sit: "반복된 실패나 번아웃이 왔을 때", body: "손가락 하나 까딱하기 싫고목소리에 생기가 전혀 없음", aff: "지금은 뿌리를 내리는 쉼의 시간입니다." },
@@ -692,7 +695,6 @@ async function triggerManualSave() {
         return;
     }
 
-    // 데이터 누수 차단 및 컬럼 맵핑 압축 파이프라인 형성
     const recordData = {
         user_name: u,
         event_name: e,
@@ -706,13 +708,11 @@ async function triggerManualSave() {
         step7: document.getElementById("step7").value,
         step8: document.getElementById("step8").value,
         
-        // 1단계: 1번~4번 질문 보존
         acim_insight_1: document.getElementById("work-q1").value,
         acim_insight_2: document.getElementById("work-q2").value,
         acim_insight_3: document.getElementById("work-q3").value,
         acim_insight_4: document.getElementById("work-q4").value,
         
-        // 1단계(5~6번) 및 2단계 핵심 심문 내용 5개 입력창 일체 구조화 압축 병합
         acim_insight_5: JSON.stringify({
             q5: document.getElementById("work-q5").value,
             q6: document.getElementById("work-q6").value,
@@ -762,22 +762,35 @@ function toggleAdminPanel() {
     }
 }
 
+/* --- 탭 이동 및 하단바 제어 분기 변경 --- */
 function showSection(type) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
     document.getElementById('btn-' + type).classList.add('active');
     document.getElementById(type + '-section').classList.add('active');
     
-    document.getElementById('fixedBottomBar').style.display = (type === 'record' || type === 'work') ? 'flex' : 'none';
+    const bottomBar = document.getElementById('fixedBottomBar');
+    const shareRecord = document.getElementById('shareBtn');
+    const shareWork = document.getElementById('shareWorkBtn');
     
-    if (type === 'work') {
+    if (type === 'record') {
+        bottomBar.style.display = 'flex';
+        shareRecord.style.display = 'block';
+        shareWork.style.display = 'none';
+    } else if (type === 'work') {
+        bottomBar.style.display = 'flex';
+        shareRecord.style.display = 'none';
+        shareWork.style.display = 'block';
+        
+        // 원본 맵핑 동적 연동
         const evVal = document.getElementById('step1').value;
         const jdVal = document.getElementById('step3').innerText;
-        
         document.getElementById('work-context-event').value = evVal;
         document.getElementById('work-context-thought').value = jdVal;
         autoResizeTextarea(document.getElementById('work-context-event'));
         autoResizeTextarea(document.getElementById('work-context-thought'));
+    } else {
+        bottomBar.style.display = 'none';
     }
     
     if(type !== 'record' && type !== 'work') renderGrid(type);
@@ -1018,7 +1031,7 @@ function renderEventList(sE) {
     syncTitleAndLoad(); 
 }
 
-/* --- 데이터 로드 로직 (LocalStorage 우선 후 Supabase 대조 동기화) --- */
+/* --- 데이터 로드 로직 --- */
 async function syncTitleAndLoad() { 
     const u = document.getElementById("userSelect").value;
     const e = document.getElementById("eventSelect").value;
@@ -1069,7 +1082,7 @@ async function syncTitleAndLoad() {
     else if(r2 === "아니오") document.getElementById("w-q2n").checked = true;
     else { document.getElementById("w-q2y").checked = false; document.getElementById("w-q2n").checked = false; }
 
-    // 2단계: Supabase 서버 오버레이 동기화 대조
+    // 2단계: Supabase 서버 동기화
     try {
         const { data, error } = await supabaseClient
             .from('combine_mind_records')
@@ -1094,7 +1107,6 @@ async function syncTitleAndLoad() {
                 localStorage.setItem(key + "_step" + i, data["step" + i] || "");
             }
 
-            // 서버 축적 데이터 파싱 및 가이드 13개 입력창 완전 복원
             document.getElementById("work-q1").value = data.acim_insight_1 || "";
             document.getElementById("work-q2").value = data.acim_insight_2 || "";
             document.getElementById("work-q3").value = data.acim_insight_3 || "";
@@ -1115,29 +1127,13 @@ async function syncTitleAndLoad() {
                     else if(parsed.check1 === "아니오") document.getElementById("w-q1n").checked = true;
                     if(parsed.check2 === "예") document.getElementById("w-q2y").checked = true;
                     else if(parsed.check2 === "아니오") document.getElementById("w-q2n").checked = true;
-                } catch(pe) { console.log("JSON Parse work detail bypass", pe); }
+                } catch(pe) { console.log("JSON Parse data fail", pe); }
             }
             
-            // 캐시 동기화 정규화
-            localStorage.setItem(key + "_work_q1", document.getElementById("work-q1").value);
-            localStorage.setItem(key + "_work_q2", document.getElementById("work-q2").value);
-            localStorage.setItem(key + "_work_q3", document.getElementById("work-q3").value);
-            localStorage.setItem(key + "_work_q4", document.getElementById("work-q4").value);
-            localStorage.setItem(key + "_work_q5", document.getElementById("work-q5").value);
-            localStorage.setItem(key + "_work_q6", document.getElementById("work-q6").value);
-            localStorage.setItem(key + "_work_ans1", document.getElementById("work-ans1").value);
-            localStorage.setItem(key + "_work_ans2", document.getElementById("work-ans2").value);
-            localStorage.setItem(key + "_work_ans3", document.getElementById("work-ans3").value);
-            localStorage.setItem(key + "_work_ans4", document.getElementById("work-ans4").value);
-            localStorage.setItem(key + "_work_turnaround", document.getElementById("work-turnaround").value);
-            localStorage.setItem(key + "_work_check_q1", document.querySelector('input[name="work-check-q1"]:checked')?.value || "");
-            localStorage.setItem(key + "_work_check_q2", document.querySelector('input[name="work-check-q2"]:checked')?.value || "");
+            saveAllToLocal();
         }
-    } catch (err) {
-        console.log("Supabase Fetch Bypass:", err);
-    }
+    } catch (err) { console.log("Supabase Fetch Bypass:", err); }
     
-    // 타겟 바인딩 싱크 자동화
     document.getElementById('work-context-event').value = document.getElementById('step1').value;
     document.getElementById('work-context-thought').value = document.getElementById('step3').innerText;
     autoResizeTextarea(document.getElementById('work-context-event'));
@@ -1174,7 +1170,6 @@ function saveAllToLocal() {
         localStorage.setItem(key + "_step" + i, val);
     }
     
-    // The Work 13가지 컴포넌트 데이터 영속성 브라우저 수동 트래킹 캐싱 안정화
     localStorage.setItem(key + "_work_q1", document.getElementById("work-q1").value);
     localStorage.setItem(key + "_work_q2", document.getElementById("work-q2").value);
     localStorage.setItem(key + "_work_q3", document.getElementById("work-q3").value);
@@ -1212,15 +1207,17 @@ function resetWorkFields() {
     if(confirm("현재 보고 계신 사건의 The Work 성찰 내용 전체를 리셋할까요?")) {
         clearWorkFields();
         saveAllToLocal();
-        alert("리셋되었습니다. 로컬 캐시 엔진이 갱신되었습니다.");
+        alert("리셋되었습니다.");
     }
 }
 
-/* --- 이미지 및 기능 제어 --- */
+/* ==========================================================================
+   [분리 완료] 1. 마음 관찰 기록 전용 이미지 캡처 공유 엔진
+   ========================================================================== */
 async function makeImage() {
     const captureArea = document.getElementById("capture");
     const shareBtn = document.getElementById("shareBtn");
-    shareBtn.disabled = true; shareBtn.innerText = "생성 중...";
+    shareBtn.disabled = true; shareBtn.innerText = "기록 이미지 생성 중...";
     try {
         const canvas = await html2canvas(captureArea, {
             scale: 2, useCORS: true, backgroundColor: "#F2F5F8", width: 1800, 
@@ -1238,8 +1235,7 @@ async function makeImage() {
                 titleDiv.style.cssText = "font-size:75px; font-weight:900; color:#003366; text-align:center; margin-bottom:60px; padding:30px; border-bottom:8px solid #003366; line-height:1.3;";
                 title.replaceWith(titleDiv);
                 
-                clonedDoc.querySelectorAll('textarea, .editable-list').forEach(ta => {
-                    if (ta.id.startsWith('work-')) return; 
+                clonedDoc.querySelectorAll('#capture textarea, #capture .editable-list').forEach(ta => {
                     const originalTextContent = (ta.tagName === "TEXTAREA" ? ta.value : ta.innerText).trim();
                     const d = clonedDoc.createElement('div');
                     d.style.cssText = "background:white; border:1px solid #dce4ee; padding:40px; border-radius:20px; font-size:48px; line-height:1.7; color:#2c3e50; white-space:pre-wrap; margin-top:15px;";
@@ -1264,29 +1260,84 @@ async function makeImage() {
             }
         });
         canvas.toBlob(async (blob) => {
-            const file = new File([blob], "mind_diary.png", { type: "image/png" });
+            const file = new File([blob], "mind_diary_nvc.png", { type: "image/png" });
             if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({ files: [file] });
             } else { 
                 document.getElementById("previewImg").src = canvas.toDataURL(); 
                 document.getElementById("previewBox").style.display = "flex"; 
             }
-            shareBtn.disabled = false; shareBtn.innerText = "❤️ 이미지 공유";
+            shareBtn.disabled = false; shareBtn.innerText = "❤️ 기록 이미지 공유";
         });
     } catch (e) { shareBtn.disabled = false; shareBtn.innerText = "실패"; }
 }
 
-function togglestep9() { 
-    const c = document.getElementById('step9-content'); 
-    const icon = document.getElementById('toggle-icon');
-    if (c.style.display === 'none') {
-        c.style.display = 'block';
-        icon.innerText = '▼';
-    } else {
-        c.style.display = 'none';
-        icon.innerText = '▲';
-    }
+/* ==========================================================================
+   [분리 완료] 2. The Work 전용 독립 이미지 캡처 공유 엔진
+   ========================================================================== */
+async function makeWorkImage() {
+    const captureArea = document.getElementById("capture-work");
+    const shareWorkBtn = document.getElementById("shareWorkBtn");
+    shareWorkBtn.disabled = true; shareWorkBtn.innerText = "작업 이미지 생성 중...";
+    try {
+        const canvas = await html2canvas(captureArea, {
+            scale: 2, useCORS: true, backgroundColor: "#F2F5F8", width: 1800,
+            onclone: (clonedDoc) => {
+                clonedDoc.querySelectorAll('.record-card-desc').forEach(el => el.style.display = 'none');
+                clonedDoc.querySelectorAll('.work-audio-btn').forEach(el => el.style.display = 'none');
+                clonedDoc.querySelectorAll('.work-radio-group').forEach(el => {
+                    // 라디오 값 치환 보존 표기화
+                    const name = el.querySelector('input')?.name;
+                    const checkedVal = el.querySelector('input:checked')?.value || "선택 안 함";
+                    const displayDiv = clonedDoc.createElement('div');
+                    displayDiv.innerHTML = `<strong>💡 선택 결과:</strong> <span style="color:#27ae60; font-weight:bold;">${checkedVal}</span>`;
+                    displayDiv.style.cssText = "font-size:42px; margin: 15px 0; background:#f8f9fa; padding:15px; border-radius:10px;";
+                    el.replaceWith(displayDiv);
+                });
+
+                const clonedCapture = clonedDoc.getElementById('capture-work');
+                clonedCapture.style.width = '1800px'; clonedCapture.style.padding = '0px'; 
+                clonedCapture.style.letterSpacing = '0px';
+
+                // 헤더 제목 디자인 주입 처리
+                const headerTitle = clonedDoc.getElementById('work-img-header-title');
+                if (headerTitle) {
+                    const uName = document.getElementById("userSelect").value || "사용자";
+                    const eName = document.getElementById("eventSelect").value || "사건";
+                    headerTitle.innerText = `The Work (네 가지 질문 성찰 기록) - [${uName} : ${eName}]`;
+                    headerTitle.style.cssText = "font-size:55px; font-weight:900; color:#2980b9; text-align:center; padding:20px; line-height:1.3;";
+                }
+
+                clonedDoc.querySelectorAll('#capture-work textarea').forEach(ta => {
+                    const content = ta.value.trim();
+                    const d = clonedDoc.createElement('div');
+                    d.style.cssText = "background:#fdfdfd; border:1px solid #cbd5e0; padding:35px; border-radius:15px; font-size:44px; line-height:1.6; color:#2c3e50; white-space:pre-wrap; margin-top:10px; margin-bottom:20px;";
+                    d.innerText = content ? content : "작성된 서술형 답변이 없습니다.";
+                    if(!content) d.style.color = "#ccc";
+                    ta.replaceWith(d);
+                });
+
+                clonedDoc.querySelectorAll('#capture-work .record-card-title').forEach(el => {
+                    el.style.fontSize = '48px'; el.style.marginBottom = '20px'; el.style.color = '#2980b9';
+                });
+                clonedDoc.querySelectorAll('#capture-work .section-label').forEach(el => {
+                    el.style.fontSize = '38px'; el.style.color = '#34495e'; el.style.marginTop = '30px';
+                });
+            }
+        });
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], "the_work_reflection.png", { type: "image/png" });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file] });
+            } else { 
+                document.getElementById("previewImg").src = canvas.toDataURL(); 
+                document.getElementById("previewBox").style.display = "flex"; 
+            }
+            shareWorkBtn.disabled = false; shareWorkBtn.innerText = "💙 작업 이미지 공유";
+        });
+    } catch (e) { shareWorkBtn.disabled = false; shareWorkBtn.innerText = "실패"; }
 }
+
 function closePreview() { document.getElementById("previewBox").style.display = "none"; }
 
 function copyQ1() {
@@ -1331,7 +1382,7 @@ function playWorkAudio(fileUrl, btn) {
     activeAudioBtn = btn;
     
     workAudioPlayer.play().catch(e => {
-        alert("가이드 오디오 스트리밍을 불러오지 못했습니다. 경로 및 권한을 확인하세요.");
+        alert("가이드 오디오 스트리밍을 불러오지 못했습니다.");
     });
     
     btn.classList.add('playing');
@@ -1373,9 +1424,7 @@ window.onload = async function() {
             localStorage.setItem("mindUsers", JSON.stringify(localUsers));
             renderUserList(lastUser || localUsers[0]);
         }
-    } catch (e) {
-        console.log("Supabase Connection initial bypass:", e);
-    }
+    } catch (e) { console.log("Supabase Connection bypass:", e); }
 
     document.querySelectorAll("textarea").forEach(ta => {
         if(ta.id.startsWith('step') || ta.id === 'mainTitle' || ta.id.startsWith('work-')) {
@@ -1401,7 +1450,6 @@ window.onload = async function() {
         });
     });
     
-    // 라디오 박스 상태 변화 실시간 탐색 백업 바인딩
     document.querySelectorAll('input[type="radio"]').forEach(r => {
         r.addEventListener("change", saveAllToLocal);
     });
