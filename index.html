@@ -514,7 +514,7 @@
 
 <!-- 통합 공통 하단 제어 바 고정 (3각 고도화 단추 연동 커스텀 완료) -->
 <div class="fixed-bottom-bar" id="fixedBottomBar">
-    <button class="btn-save-local" onclick="triggerManualSave()">💾 클라우드저장</button>
+    <button class="btn-save-local" onclick="triggerManualSave()">저장하기</button>
     
     <!-- 탭 환경 변화에 따른 이미지 엔진 삼원화 스위칭 단추 -->
     <button class="btn-image" id="shareBtn" onclick="makeImage()">❤️ 기록 이미지 공유</button>
@@ -1325,7 +1325,7 @@ async function makeWorkStep1Image() {
                 document.getElementById("previewImg").src = canvas.toDataURL(); 
                 document.getElementById("previewBox").style.display = "flex"; 
             }
-            shareBtn.disabled = false; shareBtn.innerText = "💙 1단계 이미지 공유";
+            shareBtn.disabled = false; shareBtn.innerText = "1단계 이미지 공유";
         });
     } catch (e) { shareBtn.disabled = false; shareBtn.innerText = "실패"; }
 }
@@ -1388,7 +1388,7 @@ async function makeWorkStep2Image() {
                 document.getElementById("previewImg").src = canvas.toDataURL(); 
                 document.getElementById("previewBox").style.display = "flex"; 
             }
-            shareBtn.disabled = false; shareBtn.innerText = "💚 2단계 이미지 공유";
+            shareBtn.disabled = false; shareBtn.innerText = "2단계 이미지 공유";
         });
     } catch (e) { shareBtn.disabled = false; shareBtn.innerText = "실패"; }
 }
