@@ -266,10 +266,10 @@
 <nav class="nav-container">
     <div class="tab-menu">
         <button class="tab-btn active" id="btn-record" onclick="showSection('record')">관찰 기록</button>
-        <button class="tab-btn" id="btn-work" onclick="showSection('work')">작업</button>
         <button class="tab-btn" id="btn-emotions" onclick="showSection('emotions')">감정 카드</button>
-        <button class="tab-btn" id="btn-judgment" onclick="showSection('judgment')">판단 카드</button>
         <button class="tab-btn" id="btn-needs" onclick="showSection('needs')">욕구 카드</button>
+        <button class="tab-btn" id="btn-judgment" onclick="showSection('judgment')">판단 카드</button>
+        <button class="tab-btn" id="btn-work" onclick="showSection('work')">작업</button>
     </div>
 </nav>
 
@@ -376,6 +376,30 @@
     </div>
 </section>
 
+<section id="emotions-section" class="content-section">
+    <div class="context-guide">
+        <span class="context-label">지금 관찰 중인 사건</span>
+        <div id="context-display-emotions" class="context-text-display">기록장에서 사건을 먼저 입력해 보세요.</div>
+    </div>
+    <div class="index-container" id="emotions-index"></div>
+</section>
+
+<section id="needs-section" class="content-section">
+    <div class="context-guide">
+        <span class="context-label">지금 관찰 중인 사건</span>
+        <div id="context-display-needs" class="context-text-display">기록장에서 사건을 먼저 입력해 보세요.</div>
+    </div>
+    <div class="index-container" id="needs-index"></div>
+</section>
+
+<section id="judgment-section" class="content-section">
+    <div class="context-guide">
+        <span class="context-label">지금 관찰 중인 사건</span>
+        <div id="context-display-judgment" class="context-text-display">기록장에서 사건을 먼저 입력해 보세요.</div>
+    </div>
+    <div class="index-container" id="judgment-index"></div>
+</section>
+
 <section id="work-section" class="content-section">
     <div id="capture-work-step1">
         <div class="record-card" style="border-top: 5px solid var(--work-dark);">
@@ -476,30 +500,6 @@
     </div>
 </section>
 
-<section id="emotions-section" class="content-section">
-    <div class="context-guide">
-        <span class="context-label">지금 관찰 중인 사건</span>
-        <div id="context-display-emotions" class="context-text-display">기록장에서 사건을 먼저 입력해 보세요.</div>
-    </div>
-    <div class="index-container" id="emotions-index"></div>
-</section>
-
-<section id="judgment-section" class="content-section">
-    <div class="context-guide">
-        <span class="context-label">지금 관찰 중인 사건</span>
-        <div id="context-display-judgment" class="context-text-display">기록장에서 사건을 먼저 입력해 보세요.</div>
-    </div>
-    <div class="index-container" id="judgment-index"></div>
-</section>
-
-<section id="needs-section" class="content-section">
-    <div class="context-guide">
-        <span class="context-label">지금 관찰 중인 사건</span>
-        <div id="context-display-needs" class="context-text-display">기록장에서 사건을 먼저 입력해 보세요.</div>
-    </div>
-    <div class="index-container" id="needs-index"></div>
-</section>
-
 <div class="fixed-bottom-bar" id="fixedBottomBar">
     <button class="btn-save-local" onclick="triggerManualSave()">저장하기</button>
     
@@ -580,44 +580,44 @@ const needsData = [
     { name: "사랑", cat: "cat-conn", desc: "존재 자체를 아끼고 소중히 여기며 조건 없이 베풀고 받고 싶은 강력한 에너지", sat: ["사랑스럽다", "행복하다"], unsat: ["슬프다", "서럽다"], action: "사랑해라고 전하세요." },
     {"name": "안정감","cat": "cat-conn","desc": "예측 가능한 환경과 신뢰 속에서 심리적으로 흔들림 없이 평온함을 유지하고 싶은 욕구","sat": ["편안하다", "차분하다"],"unsat": ["불안하다", "초조하다"],"action": "일관된 태도와 행동으로 예측 가능한 환경을 제공하고 신뢰를 쌓아주세요."},
     {"name": "정서적 안정","cat": "cat-conn","desc": "감정의 기복을 너그럽게 이해받고, 자신의 내면이 존중받으며 심리적인 평화를 누리고 싶은 욕구","sat": ["평온하다", "안온하다"],"unsat": ["불안정하다", "예민해지다"],"action": "감정의 변화를 있는 그대로 경청하며, 따뜻한 위로와 지지를 보내주세요."},
-    { name: "공기", cat: "cat-well", desc: "맑고 깨끗한 숨을 통해 몸을 정화하고 생명을 유지하는 필수적인 에너지", sat: ["편안하다", "만족하다"], unsat: ["답답하다", "괴롭다"], action: "심호흡을 하세요." },
-    { name: "음식•주거", cat: "cat-well", desc: "안정적인 삶의 기반을 다지고 신체 에너지를 얻고 싶은 생존의 욕구", sat: ["든든하다", "편안하다"], unsat: ["불안하다", "걱정하다"], action: "건강한 한 끼를 드세요." },
-    { name: "건강", cat: "cat-well", desc: "몸과 마음이 질병 없이 활기차고 정상적으로 기능하기를 바라는 상태", sat: ["행복하다", "만족하다"], unsat: ["우울하다", "걱정하다"], action: "물 한 잔을 마셔보세요." },
-    { name: "휴식", cat: "cat-well", desc: "지친 몸과 마음의 긴장을 풀고 에너지를 재충전하고 싶은 욕구", sat: ["편안하다", "만족하다"], unsat: ["피곤하다", "짜증나다"], action: "10분간 멈춰보세요." },
-    { name: "잠", cat: "cat-well", desc: "하루 동안 소모된 육체적, 정신적 피로를 완전히 회복시키는 필수 조건", sat: ["편안하다", "만족하다"], unsat: ["피곤하다", "예민하다"], action: "스마트폰을 멈추세요." },
-    { name: "재미", cat: "cat-well", desc: "단조로운 일상에서 벗어나 신선하고 유쾌한 자극을 즐기고 싶은 욕구", sat: ["신나다", "재미있다"], unsat: ["지루하다", "답답하다"], action: "취미 활동을 하세요." },
-    { name: "놀이", cat: "cat-well", desc: "어떠한 목적이나 부담 없이, 순수한 즐거움 자체를 느끼는 모든 활동", sat: ["신나다", "재미있다"], unsat: ["지루하다", "답답하다"], action: "어린아이처럼 낙서하세요." },
-    { name: "운동", cat: "cat-well", desc: "몸을 역동적으로 움직여 체력을 기르고 활발한 에너지를 발산하고 싶은 욕구", sat: ["신나다", "만족하다"], unsat: ["피곤하다", "무기력하다"], action: "15분간 산책하세요." },
-    { name: "편안함", cat: "cat-well", desc: "아무런 불안이나 불편함 없이 몸과 마음이 이완되어 안정을 찾은 상태", sat: ["편안하다", "만족하다"], unsat: ["불안하다", "불편하다"], action: "편한 옷을 입으세요." },
-    { name: "회복", cat: "cat-well", desc: "소모되거나 손상된 에너지를 원래의 건강한 균형태로 되돌리고 싶은 욕구", sat: ["뿌듯하다", "편안하다"], unsat: ["무기력하다", "괴롭다"], action: "자연 속으로 나가보세요." },
-    { name: "예측가능성", cat: "cat-peace", desc: "앞으로 일어날 상황을 미리 파악하여 심리적 안정을 얻고 싶은 욕구", sat: ["편안하다", "든든하다"], unsat: ["불안하다", "당황하다"], action: "루틴을 만드세요." },
-    { name: "일관성", cat: "cat-peace", desc: "언행의 앞뒤가 맞고 변함이 없어 굳건한 신뢰를 유지하고 싶은 바람", sat: ["든든하다", "편안하다"], unsat: ["당황하다", "혼란스럽다"], action: "작은 약속부터 지키세요." },
-    { name: "믿음", cat: "cat-peace", desc: "내면의 흔들림을 잡아주는 단단한 가치관이나 신념을 지키고 싶은 마음", sat: ["든든하다", "평온하다"], unsat: ["불안하다", "막막하다"], action: "힘이 되는 문구를 읽으세요." },
-    { name: "여유", cat: "cat-peace", desc: "조급함 없이 현재의 순간을 온전히 음미할 수 있는 마음의 공간", sat: ["행복하다", "만족하다"], unsat: ["초조하다", "긴장하다"], action: "일정 사이에 여백을 두세요." },
-    { name: "조화", cat: "cat-peace", desc: "주변 환경이나 타인과 갈등 없이 균형을 이루고 싶은 평화로운 상태", sat: ["평온하다", "만족하다"], unsat: ["불안하다", "어색하다"], action: "제3의 길을 질문하세요." },
-    { name: "감사", cat: "cat-peace", desc: "삶에서 주어진 소중함과 고마움을 깊이 느끼고 표현하고 싶은 욕구", sat: ["행복하다", "따뜻하다"], unsat: ["속상하다", "허탈하다"], action: "3가지를 기록하세요." },
-    { name: "평등", cat: "cat-peace", desc: "차별 없이 누구에게나 균등한 기회와 정당한 대우가 주어지길 바라는 마음", sat: ["편안하다", "만족하다"], unsat: ["분하다", "억울하다"], action: "의견을 정중히 밝히세요." },
-    { name: "평화", cat: "cat-peace", desc: "분쟁이나 소음 없이 외부와 내면이 고요하고 조화로운 상태", sat: ["편안하다", "행복하다"], unsat: ["불안하다", "짜증나다"], action: "명상을 해보세요." },
-    { name: "안전", cat: "cat-peace", desc: "위험이나 위협으로부터 신체적, 정신적으로 보호받고 싶은 원초적 욕구", sat: ["편안하다", "든든하다"], unsat: ["두렵다", "무섭다"], action: "안전한 사람을 떠올리세요." },
-    { name: "보호", cat: "cat-peace", desc: "소중한 가치, 사람, 환경을 외부의 위험으로부터 안전하게 지키고 싶은 마음", sat: ["든든하다", "뿌듯하다"], unsat: ["걱정하다", "무섭다"], action: "식물을 돌보세요." },
-    { name: "희망", cat: "cat-peace", desc: "지금보다 더 나은 내일이 올 것이라는 긍정적이고 밝은 믿음", sat: ["기대하다", "설레다"], unsat: ["좌절하다", "우울하다"], action: "작은 변화에 집중하세요." },
-    { name: "애도", cat: "cat-peace", desc: "소중한 존재의 상실을 충분히 슬퍼하고 마음을 건강하게 정리하는 과정", sat: ["평온하다", "안도하다"], unsat: ["서럽다", "슬프다"], action: "편지를 써보세요." },
-    { name: "슬퍼하기", cat: "cat-peace", desc: "내면의 아픔을 억누르지 않고 눈물 등으로 정화하고 싶은 솔직한 욕구", sat: ["후련하다", "편안하다"], unsat: ["괴롭다", "우울하다"], action: "마음껏 울어보세요." },
-    { name: "진실", cat: "cat-meaning", desc: "거짓 없이 사물의 본질이나 실제 사실을 있는 그대로 마주하고 싶은 욕구", sat: ["편안하다", "당당하다"], unsat: ["혼란스럽다", "억울하다"], action: "사실을 털어놓으세요." },
-    { name: "솔직함", cat: "cat-meaning", desc: "꾸밈이나 숨김없이 자신의 내면을 용기 있게 드러내고 싶은 마음", sat: ["자랑스럽다", "편안하다"], unsat: ["부끄럽다", "불편하다"], action: "마음을 표현하세요." },
-    { name: "도전", cat: "cat-meaning", desc: "현실에 안주하지 않고 새로운 성취를 위해 위험을 감수하고 싶은 열정", sat: ["신나다", "기대하다"], unsat: ["두렵다", "막막하다"], action: "첫 단계를 실행하세요." },
-    { name: "배움", cat: "cat-meaning", desc: "새로운 지식이나 깨달음을 얻어 지적으로 성장하고 싶은 깊은 욕구", sat: ["재미있다", "기대하다"], unsat: ["지루하다", "답답하다"], action: "새로 알게 된 것을 기록하세요." },
-    { name: "성취", cat: "cat-meaning", desc: "목표한 바를 끝까지 해내어 스스로 결과물을 만들어내고 싶은 마음", sat: ["뿌듯하다", "자랑스럽다"], unsat: ["좌절하다", "실망하다"], action: "체크 표시를 하세요." },
-    { name: "보람", cat: "cat-meaning", desc: "내가 한 행동이 가치 있고 의미 있는 일이었음을 확인하고 싶은 마음", sat: ["뿌듯하다", "만족하다"], unsat: ["허탈하다", "무력하다"], action: "긍정적 영향들을 떠올리세요." },
-    { name: "기여", cat: "cat-meaning", desc: "내 능력이나 행동을 통해 사회나 타인에게 긍정적인 영향을 주고 싶은 바람", sat: ["뿌듯하다", "자랑스럽다"], unsat: ["허탈하다", "속상하다"], action: "봉사를 실천해 보세요." },
-    { name: "능력", cat: "cat-meaning", desc: "어떤 일을 탁월하게 해낼 수 있는 기술과 역량을 탄착히 갖추고 싶은 욕구", sat: ["자랑스럽다", "든든하다"], unsat: ["위축되다", "부끄럽다"], action: "타인을 도와주세요." },
-    { name: "꿈", cat: "cat-meaning", desc: "자신이 바라는 이상적인 가치나 미래의 목표를 실현하고 싶은 간절한 열망", sat: ["기대하다", "설레다"], unsat: ["막막하다", "좌절하다"], action: "계획을 세우세요." },
-    { name: "창조성", cat: "cat-meaning", desc: "틀에 박힌 것에서 벗어나 새로운 생각이나 결과물을 만들어내고 싶은 욕구", sat: ["신나다", "설레다"], unsat: ["지루하다", "답답하다"], action: "일상에 변화를 시도하세요." },
-    { name: "자신감", cat: "cat-meaning", desc: "자신의 능력을 신뢰하며 어떤 일에도 당당하게 마주하고 싶은 내면의 에너지", sat: ["자랑스럽다", "신나다"], unsat: ["위축되다", "초조하다"], action: "기억 3가지를 되새기세요." },
-    { name: "자부심", cat: "cat-meaning", desc: "자신의 성취와 존재 가치에 대해 스스로 당당하고 명예롭게 여기고 싶은 마음", sat: ["당당하다", "자랑스럽다", "충만하다"], unsat: ["초라하다", "부끄럽다", "위축되다"], action: "오늘 내가 해낸 작은 성과나 나의 긍정적인 면을 세 가지만 기록해보세요." },
-    { name: "축하", cat: "cat-meaning", desc: "이뤄낸 결실이나 기쁜 순간을 기리며 기쁨을 널리 나누고 싶은 마음", sat: ["기쁘다", "감동하다"], unsat: ["서운하다", "속상하다"], action: "작은 보상을 선물하세요." },
-    { name: "존재감", cat: "cat-meaning", desc: "어디서나 소외되지 않고 가치 있고 의미 있는 존재로 뚜렷하게 인식되고 싶은 마음", sat: ["자랑스럽다", "뿌듯하다"], unsat: ["위축되다", "허탈하다"], action: "당당히 드러내세요." },
-    { name: "평온함", cat: "cat-meaning", desc: "마음의 동요나 불안 없이 고요하고 안녕한 상태를 지속하고 싶은 욕구", sat: ["평화롭다", "안온하다"], unsat: ["불안하다", "초조하다"], action: "숨을 깊게 고르며 이 순간을 음미하세요." }
+    { name: "공기", cat: "well", desc: "맑고 깨끗한 숨을 통해 몸을 정화하고 생명을 유지하는 필수적인 에너지", sat: ["편안하다", "만족하다"], unsat: ["답답하다", "괴롭다"], action: "심호흡을 하세요." },
+    { name: "음식•주거", cat: "well", desc: "안정적인 삶의 기반을 다지고 신체 에너지를 얻고 싶은 생존의 욕구", sat: ["든든하다", "편안하다"], unsat: ["불안하다", "걱정하다"], action: "건강한 한 끼를 드세요." },
+    { name: "건강", cat: "well", desc: "몸과 마음이 질병 없이 활기차고 정상적으로 기능하기를 바라는 상태", sat: ["행복하다", "만족하다"], unsat: ["우울하다", "걱정하다"], action: "물 한 잔을 마셔보세요." },
+    { name: "휴식", cat: "well", desc: "지친 몸과 마음의 긴장을 풀고 에너지를 재충전하고 싶은 욕구", sat: ["편안하다", "만족하다"], unsat: ["피곤하다", "짜증나다"], action: "10분간 멈춰보세요." },
+    { name: "잠", cat: "well", desc: "하루 동안 소모된 육체적, 정신적 피로를 완전히 회복시키는 필수 조건", sat: ["편안하다", "만족하다"], unsat: ["피곤하다", "예민하다"], action: "스마트폰을 멈추세요." },
+    { name: "재미", cat: "well", desc: "단조로운 일상에서 벗어나 신선하고 유쾌한 자극을 즐기고 싶은 욕구", sat: ["신나다", "재미있다"], unsat: ["지루하다", "답답하다"], action: "취미 활동을 하세요." },
+    { name: "놀이", cat: "well", desc: "어떠한 목적이나 부담 없이, 순수한 즐거움 자체를 느끼는 모든 활동", sat: ["신나다", "재미있다"], unsat: ["지루하다", "답답하다"], action: "어린아이처럼 낙서하세요." },
+    { name: "운동", cat: "well", desc: "몸을 역동적으로 움직여 체력을 기르고 활발한 에너지를 발산하고 싶은 욕구", sat: ["신나다", "만족하다"], unsat: ["피곤하다", "무기력하다"], action: "15분간 산책하세요." },
+    { name: "편안함", cat: "well", desc: "아무런 불안이나 불편함 없이 몸과 마음이 이완되어 안정을 찾은 상태", sat: ["편안하다", "만족하다"], unsat: ["불안하다", "불편하다"], action: "편한 옷을 입으세요." },
+    { name: "회복", cat: "well", desc: "소모되거나 손상된 에너지를 원래의 건강한 균형태로 되돌리고 싶은 욕구", sat: ["뿌듯하다", "편안하다"], unsat: ["무기력하다", "괴롭다"], action: "자연 속으로 나가보세요." },
+    { name: "예측가능성", cat: "peace", desc: "앞으로 일어날 상황을 미리 파악하여 심리적 안정을 얻고 싶은 욕구", sat: ["편안하다", "든든하다"], unsat: ["불안하다", "당황하다"], action: "루틴을 만드세요." },
+    { name: "일관성", cat: "peace", desc: "언행의 앞뒤가 맞고 변함이 없어 굳건한 신뢰를 유지하고 싶은 바람", sat: ["든든하다", "편안하다"], unsat: ["당황하다", "혼란스럽다"], action: "작은 약속부터 지키세요." },
+    { name: "믿음", cat: "peace", desc: "내면의 흔들림을 잡아주는 단단한 가치관이나 신념을 지키고 싶은 마음", sat: ["든든하다", "평온하다"], unsat: ["불안하다", "막막하다"], action: "힘이 되는 문구를 읽으세요." },
+    { name: "여유", cat: "peace", desc: "조급함 없이 현재의 순간을 온전히 음미할 수 있는 마음의 공간", sat: ["행복하다", "만족하다"], unsat: ["초조하다", "긴장하다"], action: "일정 사이에 여백을 두세요." },
+    { name: "조화", cat: "peace", desc: "주변 환경이나 타인과 갈등 없이 균형을 이루고 싶은 평화로운 상태", sat: ["평온하다", "만족하다"], unsat: ["불안하다", "어색하다"], action: "제3의 길을 질문하세요." },
+    { name: "감사", cat: "peace", desc: "삶에서 주어진 소중함과 고마움을 깊이 느끼고 표현하고 싶은 욕구", sat: ["행복하다", "따뜻하다"], unsat: ["속상하다", "허탈하다"], action: "3가지를 기록하세요." },
+    { name: "평등", cat: "peace", desc: "차별 없이 누구에게나 균등한 기회와 정당한 대우가 주어지길 바라는 마음", sat: ["편안하다", "만족하다"], unsat: ["분하다", "억울하다"], action: "의견을 정중히 밝히세요." },
+    { name: "평화", cat: "peace", desc: "분쟁이나 소음 없이 외부와 내면이 고요하고 조화로운 상태", sat: ["편안하다", "행복하다"], unsat: ["불안하다", "짜증나다"], action: "명상을 해보세요." },
+    { name: "안전", cat: "peace", desc: "위험이나 위협으로부터 신체적, 정신적으로 보호받고 싶은 원초적 욕구", sat: ["편안하다", "든든하다"], unsat: ["두렵다", "무섭다"], action: "안전한 사람을 떠올리세요." },
+    { name: "보호", cat: "peace", desc: "소중한 가치, 사람, 환경을 외부의 위험으로부터 안전하게 지키고 싶은 마음", sat: ["든든하다", "뿌듯하다"], unsat: ["걱정하다", "무섭다"], action: "식물을 돌보세요." },
+    { name: "희망", cat: "peace", desc: "지금보다 더 나은 내일이 올 것이라는 긍정적이고 밝은 믿음", sat: ["기대하다", "설레다"], unsat: ["좌절하다", "우울하다"], action: "작은 변화에 집중하세요." },
+    { name: "애도", cat: "peace", desc: "소중한 존재의 상실을 충분히 슬퍼하고 마음을 건강하게 정리하는 과정", sat: ["평온하다", "안도하다"], unsat: ["서럽다", "슬프다"], action: "편지를 써보세요." },
+    { name: "슬퍼하기", cat: "peace", desc: "내면의 아픔을 억누르지 않고 눈물 등으로 정화하고 싶은 솔직한 욕구", sat: ["후련하다", "편안하다"], unsat: ["괴롭다", "우울하다"], action: "마음껏 울어보세요." },
+    { name: "진실", cat: "meaning", desc: "거짓 없이 사물의 본질이나 실제 사실을 있는 그대로 마주하고 싶은 욕구", sat: ["편안하다", "당당하다"], unsat: ["혼란스럽다", "억울하다"], action: "사실을 털어놓으세요." },
+    { name: "솔직함", cat: "meaning", desc: "꾸밈이나 숨김없이 자신의 내면을 용기 있게 드러내고 싶은 마음", sat: ["자랑스럽다", "편안하다"], unsat: ["부끄럽다", "불편하다"], action: "마음을 표현하세요." },
+    { name: "도전", cat: "meaning", desc: "현실에 안주하지 않고 새로운 성취를 위해 위험을 감수하고 싶은 열정", sat: ["신나다", "기대하다"], unsat: ["두렵다", "막막하다"], action: "첫 단계를 실행하세요." },
+    { name: "배움", cat: "meaning", desc: "새로운 지식이나 깨달음을 얻어 지적으로 성장하고 싶은 깊은 욕구", sat: ["재미있다", "기대하다"], unsat: ["지루하다", "답답하다"], action: "새로 알게 된 것을 기록하세요." },
+    { name: "성취", cat: "meaning", desc: "목표한 바를 끝까지 해내어 스스로 결과물을 만들어내고 싶은 마음", sat: ["뿌듯하다", "자랑스럽다"], unsat: ["좌절하다", "실망하다"], action: "체크 표시를 하세요." },
+    { name: "보람", cat: "meaning", desc: "내가 한 행동이 가치 있고 의미 있는 일이었음을 확인하고 싶은 마음", sat: ["뿌듯하다", "만족하다"], unsat: ["허탈하다", "무력하다"], action: "긍정적 영향들을 떠올리세요." },
+    { name: "기여", cat: "meaning", desc: "내 능력이나 행동을 통해 사회나 타인에게 긍정적인 영향을 주고 싶은 바람", sat: ["뿌듯하다", "자랑스럽다"], unsat: ["허탈하다", "속상하다"], action: "봉사를 실천해 보세요." },
+    { name: "능력", cat: "meaning", desc: "어떤 일을 탁월하게 해낼 수 있는 기술과 역량을 탄착히 갖추고 싶은 욕구", sat: ["자랑스럽다", "든든하다"], unsat: ["위축되다", "부끄럽다"], action: "타인을 도와주세요." },
+    { name: "꿈", cat: "meaning", desc: "자신이 바라는 이상적인 가치나 미래의 목표를 실현하고 싶은 간절한 열망", sat: ["기대하다", "설레다"], unsat: ["막막하다", "좌절하다"], action: "계획을 세우세요." },
+    { name: "창조성", cat: "meaning", desc: "틀에 박힌 것에서 벗어나 새로운 생각이나 결과물을 만들어내고 싶은 욕구", sat: ["신나다", "설레다"], unsat: ["지루하다", "답답하다"], action: "일상에 변화 시도하세요." },
+    { name: "자신감", cat: "meaning", desc: "자신의 능력을 신뢰하며 어떤 일에도 당당하게 마주하고 싶은 내면의 에너지", sat: ["자랑스럽다", "신나다"], unsat: ["위축되다", "초조하다"], action: "기억 3가지를 되새기세요." },
+    { name: "자부심", cat: "meaning", desc: "자신의 성취와 존재 가치에 대해 스스로 당당하고 명예롭게 여기고 싶은 마음", sat: ["당당하다", "자랑스럽다", "충만하다"], unsat: ["초라하다", "부끄럽다", "위축되다"], action: "오늘 내가 해낸 작은 성과나 나의 긍정적인 면을 세 가지만 기록해보세요." },
+    { name: "축하", cat: "meaning", desc: "이뤄낸 결실이나 기쁜 순간을 기리며 기쁨을 널리 나누고 싶은 마음", sat: ["기쁘다", "감동하다"], unsat: ["서운하다", "속상하다"], action: "작은 보상을 선물하세요." },
+    { name: "존재감", cat: "meaning", desc: "어디서나 소외되지 않고 가치 있고 의미 있는 존재로 뚜렷하게 인식되고 싶은 마음", sat: ["자랑스럽다", "뿌듯하다"], unsat: ["위축되다", "허탈하다"], action: "당당히 드러내세요." },
+    { name: "평온함", cat: "meaning", desc: "마음의 동요나 불안 없이 고요하고 안녕한 상태를 지속하고 싶은 욕구", sat: ["평화롭다", "안온하다"], unsat: ["불안하다", "초조하다"], action: "숨을 깊게 고르며 이 순간을 음미하세요." }
 ];
 
 const judgmentData = [
@@ -755,7 +755,7 @@ const emotionsData = [
     { name: "분하다", cat: "cat-ang", desc: "억울한 일을 당하거나 자신의 무력함을 느껴 화가 나고 속상한 상태", sit: "부당한 오해를 받거나, 최선을 다했음에도 외부 요인으로 인해 실패하여 억울할 때", body: "주먹을 꽉 쥐거나 입술을 깨물게 되며, 가슴이 답답하고 억눌린 울음이 터질 것 같음", aff: "이 억울함과 분노는 나를 보호하려는 마음에서 옵니다. 나는 이 에너지를 나를 발전시키는 원동력으로 바꿀 수 있습니다." },
     { name: "증오하다", cat: "cat-ang", desc: "특정 대상에 대해 극심한 반감과 혐오를 느끼며 몹시 미워하는 상태", sit: "나나 내가 소중하게 여기는 것을 심각하게 해친 대상을 떠올리거나 마주쳤을 때", body: "대상을 향해 눈빛이 차가워지고 온몸의 근육이 경직되며, 속에서 끓어오르는 듯한 열기를 느낌", aff: "누군가를 미워하는 마음은 결국 나를 지치게 합니다. 나는 상대를 위해서가 아니라 나의 해방을 위해 마음의 짐을 내려놓습니다." },
     { name: "격노하다", cat: "cat-ang", desc: "참을 수 없을 만큼 감정이 폭발하여 몹시 맹렬하게 화를 내는 상태", sit: "도저히 용납할 수 없는 배신을 당하거나, 나의 핵심 가치나 존엄성이 심각하게 짓밟혔을 때", body: "이성을 잃고 소리를 지르거나, 온몸이 부들부들 떨리고 호흡이 통제되지 않음", aff: "나는 폭풍처럼 몰아치는 감정 속에서도 잠시 멈춰 서서 호흡을 고르고, 이성적인 판단력을 되찾을 수 있습니다." },
-    { name: "괘씸하다", cat: "cat-ang", desc: "상대방이 마땅히 지켜야 할 도리나 예의를 어겨 몹시 얄밉고 분개하는 상태", sit: "호의를 베풀었는데도 배신하거나, 믿었던 사람이 건방지고 무례하게 굴 때", body: "어이가 없어 헛웃음이 나고 혀를 차게 되며, 상대를 매섭게 쏘아보게 됨", aff: "타인의 예의 없는 행동은 그 사람의 문제일 뿐입니다. 나는 상대의 수준에 맞춰 반응하지 않고 나의 품위를 지킵니다." },
+    { name: "괘씸하다", cat: "cat-ang", desc: "상대방이 마땅히 지켜야 할 도리나 예의를 어겨 몹시 얄밉고 분개하는 상태", sit: "호의를 베풀었는데도 배신하거나, 믿었던 사람이 건방지고 무례하게 굴 때", body: "어이가 없어 헛웃음이 나고 혀를 차게 됨", aff: "타인의 예의 없는 행동은 그 사람의 문제일 뿐입니다. 나는 상대의 수준에 맞춰 반응하지 않고 나의 품위를 지킵니다." },
     { name: "밉다", cat: "cat-ang", desc: "대상의 행동이나 태도가 원망스러워 정서적 거리감을 두고 싶어지는 거부감", sit: "진심을 무시한 상대가 떠오를 때", body: "입술을 굳게 다물게 되고 상대 쪽으로 고개를 돌리기 싫어짐", aff: "미움 대신 나를 아끼는 마음을 채웁니다." },
     { name: "원망스럽다", cat: "cat-ang", desc: "자신이 겪는 고통이나 아픔의 원인을 대상에게 돌리며 한탄하는 아픈 마음", sit: "결정적 순간에 곁에 없었던 이에 대한 서운함", body: "가슴 깊은 곳이 쓰리고 명치 부근이 딱딱해짐", aff: "기대를 내려놓고 스스로를 돕습니다." },
     { name: "질투하다", cat: "cat-ang", desc: "타인의 성취나 소유를 바라보며 자신의 내면적 결핍이 날카롭게 자극되는 시기심", sit: "타인의 성과를 축하하기 힘들 때", body: "속이 뒤틀리는 느낌과 함께 가슴이 서늘해짐", aff: "타인의 성취는 나의 가능성을 보여주는 거울입니다." },
@@ -984,7 +984,7 @@ function openModal(type, name) {
     const body = document.getElementById('modalBody');
     
     const emojis = {joy:"😊", love:"❤️", peace:"🌿", anx:"😰", ang:"🔥", sad:"💧", auto:"🦋", conn:"🤝", well:"🍎", meaning:"💎", low:"📉", irr:"🌀", res:"⚖️", neg:"🚫", pre:"🧐"};
-    const emoji = emojis[item.cat.split('-')[1]] || "✨";
+    const emoji = emojis[item.cat.split('-')[0]] || emojis[item.cat.split('-')[1]] || "✨";
 
     let content = `
         <div style="font-size:60px; text-align:center; margin-bottom:10px;">${emoji}</div>
@@ -1040,7 +1040,7 @@ function renderGrid(type) {
 
     data.forEach(item => {
         const link = document.createElement('div');
-        const catSuffix = item.cat.split('-')[1];
+        const catSuffix = item.cat.split('-')[1] || item.cat;
         link.className = `item-link link-${catSuffix}`;
         link.innerText = item.name;
         link.onclick = () => openModal(type, item.name);
