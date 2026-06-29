@@ -1615,6 +1615,20 @@ window.onload = async function() {
     
     loadStep9Global();
 };
+/* --- Gemini 섹션 토글 기능 --- */
+function togglestep9() {
+    const content = document.getElementById("step9-content");
+    const icon = document.getElementById("toggle-icon");
+    
+    if (content.style.display === "none" || content.style.display === "") {
+        content.style.display = "block";
+        icon.innerText = "▼"; // 열렸을 때 아이콘 변경
+    } else {
+        content.style.display = "none";
+        icon.innerText = "▲"; // 닫혔을 때 아이콘 변경
+    }
+}
+
 </script>
 </body>
 </html>
