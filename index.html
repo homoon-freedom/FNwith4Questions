@@ -417,6 +417,7 @@
             
             <span class="section-label">1. 당신을 화나게 하거나 슬프게 하는 사람은 누구인가요?</span>
             <textarea id="work-q1" placeholder="예: 나는 (이름) 때문에 화가 난다. 왜냐하면..."></textarea>
+            <button class="add-to-record-btn" style="margin-top: 5px; margin-bottom: 15px; padding: 10px; font-size: 0.85rem; background-color: var(--work-primary);" onclick="copyWorkQ1ToStep2()">⬇️ 2단계(질문 1, 2)로 내용 가져가기</button>
             
             <span class="section-label">2. 당신은 그 사람이 어떻게 바뀌기를 원하나요?</span>
             <textarea id="work-q2" placeholder="예: 나는 그 사람이 내 가치를 인정하고 먼저 사과하기를 원한다."></textarea>
@@ -429,14 +430,10 @@
             
             <span class="section-label">5. 당신은 그 사람을 어떻게 생각하나요? (판단 리스트)</span>
             <div class="record-card-desc" style="margin-top: 5px; font-weight: bold; color: var(--accent-blue);">[카드에서 추가된 항목]</div>
-			<textarea id="work-q5-cards" style="margin-bottom: 10px;" placeholder="판단 카드에서 추가된 항목이 여기에 표시되며, 자유롭게 수정할 수 있습니다."></textarea>
-
+            <textarea id="work-q5-cards" style="margin-bottom: 10px;" placeholder="판단 카드에서 추가된 항목이 여기에 표시되며, 자유롭게 수정할 수 있습니다."></textarea>
 
             <div class="record-card-desc" style="font-weight: bold;">[직접 입력]</div>
             <textarea id="work-q5" placeholder="예: 그 사람은 이기적이고 독선적이며 무례한 사람이다."></textarea>
-            
-            <span class="section-label">6. 다시는 경험하고 싶지 않은 점은 무엇인가요?</span>
-            <textarea id="work-q6" placeholder="예: 나는 앞으로 다시는 그 사람 밑에서 평가받는 기분을 느끼고 싶지 않다."></textarea>
         </div>
     </div>
 
@@ -493,9 +490,14 @@
                 <div class="record-card-desc" style="margin-top:5px;">원래 문장을 나 자신으로, 상대방으로, 혹은 정반대로 바꾸어 보고 각각의 실제적인 예시를 찾아봅니다.</div>
                 <textarea id="work-turnaround" placeholder="예: '그가 나를 무시한다' -> '내가 나를 무시한다' / '내가 그를 무시한다' / '그는 나를 존중한다'"></textarea>
             </div>
+
+            <!-- 이동된 6번 질문 -->
+            <div style="margin-bottom: 10px; border-top: 1px dashed #ddd; padding-top: 15px;">
+                <span class="section-label" style="margin-top:0; color: var(--work-success); font-size: 0.85rem;">6. 다시는 경험하고 싶지 않은 점은 무엇인가요?</span>
+                <textarea id="work-q6" placeholder="예: 나는 앞으로 다시는 그 사람 밑에서 평가받는 기분을 느끼고 싶지 않다."></textarea>
+            </div>
         </div>
     </div>
-
 </section>
 
 <div class="fixed-bottom-bar" id="fixedBottomBar">
@@ -574,7 +576,7 @@ const needsData = [
     { name: "나눔", cat: "cat-conn", desc: "내가 가진 물질적, 정서적 가치를 대가 없이 전달하며 기쁨을 얻고 싶은 마음", sat: ["행복하다", "뿌듯하다"], unsat: ["속상하다", "허탈하다"], action: "깜짝 선물을 해보세요." },
     { name: "배려", cat: "cat-conn", desc: "타인의 상황과 형편을 세심하게 살피고 마음을 쓰고 싶은 따뜻한 성품", sat: ["뿌듯하다", "따뜻하다"], unsat: ["속상하다", "서운하다"], action: "주변 필요를 살펴보세요." },
     { name: "정서적 배려", cat: "cat-conn", desc: "자신과 타인의 감정 상태를 세심하게 살피며 안전하게 연결되고 싶은 마음", sat: ["따뜻하다", "연결되다", "안심하다"], unsat: ["서운하다", "외롭다", "단절되다"], action: "상대방의 감정 단어에 귀를 기울이고 공감의 한마디를 건네보세요." },
-    { name: "보살핌", cat: "cat-conn", desc: "소중한 대상을 따뜻하게 돌보거나, 누군가로부터 돌봄을 받고 싶은 본능적 마음", sat: ["사랑스럽다", "든든하다"], unsat: ["외롭다", "불안하다"], action: "나 자신을 돌보세요." },
+    { name: "보살핌", cat: "cat-conn", desc: "소중한 대상을 따뜻하게 돌보거나, 누 편집으로부터 돌봄을 받고 싶은 본능적 마음", sat: ["사랑스럽다", "든든하다"], unsat: ["외롭다", "불안하다"], action: "나 자신을 돌보세요." },
     { name: "사랑", cat: "cat-conn", desc: "존재 자체를 아끼고 소중히 여기며 조건 없이 베풀고 받고 싶은 강력한 에너지", sat: ["사랑스럽다", "행복하다"], unsat: ["슬프다", "서럽다"], action: "사랑해라고 전하세요." },
     {"name": "안정감","cat": "cat-conn","desc": "예측 가능한 환경과 신뢰 속에서 심리적으로 흔들림 없이 평온함을 유지하고 싶은 욕구","sat": ["편안하다", "차분하다"],"unsat": ["불안하다", "초조하다"],"action": "일관된 태도와 행동으로 예측 가능한 환경을 제공하고 신뢰를 쌓아주세요."},
     {"name": "정서적 안정","cat": "cat-conn","desc": "감정의 기복을 너그럽게 이해받고, 자신의 내면이 존중받으며 심리적인 평화를 누리고 싶은 욕구","sat": ["평온하다", "안온하다"],"unsat": ["불안정하다", "예민해지다"],"action": "감정의 변화를 있는 그대로 경청하며, 따뜻한 위로와 지지를 보내주세요."},
@@ -736,7 +738,7 @@ const emotionsData = [
     { name: "당황하다", cat: "cat-anx", desc: "예상치 못한 돌발 상황을 마주하여 대처 능력이 일시적으로 마비되고 허둥대는 상태", sit: "실수를 하거나 갑작스러운 질문을 받을 때", body: "얼굴이 화끈거림을 느끼고 머릿속이 하얘지며 손동작이 꼬임", aff: "당황해도 괜찮습니다. 지혜를 찾을 것입니다." },
     { name: "두렵다", cat: "cat-anx", desc: "위협적이거나 해를 끼칠 만한 대상을 마주하여 도망치거나 저항하고 싶은 무서운 감정", sit: "압박을 주는 상대나 공포를 마주할 때", body: "몸이 떨리고 입술이 마르며 뒤로 물러나고 싶어짐", aff: "내 안의 용기를 믿으며 나를 지킵니다." },
     { name: "무섭다", cat: "cat-anx", desc: "눈앞의 구체적인 위험이나 공포 대상 앞에서 자신을 보호하려는 방어 기제가 작동한 상태", sit: "천둥번개나 위험 요소를 발견할 때", body: "소름이 돋고식은땀이 흐르며 근육이 경직됨", aff: "나는 안전한 곳에 있습니다. 곧 지나갑니다." },
-    { name: "초조하다", cat: "cat-anx", desc: "일이 뜻대로 되지 않거나 기한에 임박하여 마음이 조급하고 애가 타는 상태", sit: "순서를 기다리거나 기한이 임박할 때", body: "다리를 떨거나 손톱을 만지작거리며 자꾸 시계를 봄", aff: "모든 것은 제때 이루어집니다. 나를 믿습니다." },
+    { name: "초조하다", cat: "cat-anx", desc: "일이 뜻대로 되지 않거나 기한에 임박하여 마음이 조그맣게 애가 타는 상태", sit: "순서를 기다리거나 기한이 임박할 때", body: "다리를 떨거나 손톱을 만지작거리며 자꾸 시계를 봄", aff: "모든 것은 제때 이루어집니다. 나를 믿습니다." },
     {"name": "당혹스럽다","cat": "cat-anx","desc": "예상치 못한 상황이나 질문에 직면하여 어떻게 반응해야 할지 몰라 마음이 갈피를 잡지 못하고 당황스러운 상태","sit": "갑작스러운 상황 변화나 당황스러운 질문을 받았을 때","body": "심장 박동이 빨라지고, 사고가 일시적으로 정지하며, 눈동자가 흔들리고 경직된 표정을 짓게 됨","aff": "예측할 수 없는 순간은 성장의 기회입니다. 지금의 당황스러움을 있는 그대로 받아들이고 천천히 대응합니다."},
     { name: "부담스럽다", cat: "cat-anx", desc: "자신이 감당하기 어려운 무거운 책임이나 큰 기대를 요구받아 생기는 중압감", sit: "무리한 부탁을 받거나 책임이 무거울 때", body: "어깨와 목덜미가 묵직하고 가슴이 답답하게 압박됨", aff: "나는 내 한계를 존중하며 거절할 수 있습니다." },
     { name: "막막하다", cat: "cat-anx", desc: "해결의 실마리가 전혀 보이지 않고 의지할 곳도 없어 어찌할 바를 모르는 무력한 상태", sit: "진로 등 선택지가 보이지 않을 때", body: "눈앞이 흐릿한 기분과 함께 깊은 숨이 자주 나옴", aff: "한 걸음씩 나아갑니다. 길은 만들어집니다." },
@@ -766,7 +768,7 @@ const emotionsData = [
     { name: "외롭다", cat: "cat-sad", desc: "세상이나 집단 속에서 누구에게도 온전히 이해받지 못한다고 느껴지는 쓸쓸함", sit: "군중 속이나 혼자 남겨진 밤", body: "팔다리가 차갑게 느껴지고 몸이 작아지는 듯한 오한", aff: "나는 나 자신과 먼저 친해지겠습니다." },
     { name: "슬프다", cat: "cat-sad", desc: "소중한 존재나 가치를 잃어버린 상실의 아픔을 마음 가득 수용하고 정화하는 과정", sit: "이별이나 아픈 진실을 마주할 때", body: "눈시울이 뜨거워지고 온몸에 힘이 빠지며 가슴이 무거움", aff: "눈물은 상처 입은 마음을 씻어줍니다." },
     {"name": "쓸쓸하다","cat": "cat-sad","desc": "주위에 아무도 없는 듯한 고요함 속에서 느껴지는 서글프고 허전한 마음","sit": "혼자 방에 앉아 창밖을 보거나, 북적이는 거리에서 문득 혼자라는 생각이 들 때","body": "마음 한구석이 텅 빈 것 같고, 몸의 온기가 살짝 빠져나가는 듯한 공허함","aff": "잠시 멈추어 나의 내면을 돌보는 시간을 가지며, 이 고요함 속에서 나를 따뜻하게 안아줍니다."},
-    { name: "우울하다", cat: "cat-sad", desc: "마음의 에너지가 급격히 낮아져 매사에 의욕이 없고 침잠해 있는 무거운 상태", sit: "무력감이 지속되거나 단절된 느낌일 때", body: "눈꺼풀이 무겁고 온몸이 젖은 솜처럼 바닥으로 가라앉음", aff: "이 또한 날씨일 뿐입니다. 해는 뜹니다." },
+    { name: "우울하다", cat: "cat-sad", desc: "마음에 에너지가 급격히 낮아져 매사에 의욕이 없고 침잠해 있는 무거운 상태", sit: "무력감이 지속되거나 단절된 느낌일 때", body: "눈꺼풀이 무겁고 온몸이 젖은 솜처럼 바닥으로 가라앉음", aff: "이 또한 날씨일 뿐입니다. 해는 뜹니다." },
     { name: "무기력하다", cat: "cat-sad", desc: "누적된 번아웃이나 실패로 인해 아무것도 하고 싶지 않고 에너지가 바닥난 상태", sit: "반복된 실패나 번아웃이 왔을 때", body: "손가락 하나 까딱하기 싫고목소리에 생기가 전혀 없음", aff: "지금은 뿌리를 내리는 쉼의 시간입니다." },
     { name: "무력하다", cat: "cat-sad", desc: "내 힘으로는 도저히 현재의 상황을 바꿀 수 없다는 거대한 한계에 압도된 마음", sit: "반복되는 갈등 속에 해결책이 없을 때", body: "어깨가 축 처지고 심장 박동이 아주 느리고 약해짐", aff: "아무것도 하지 않아도 괜찮습니다." },
     { name: "후회하다", cat: "cat-sad", desc: "과거에 했던 자신의 선택이나 행동에 아쉬움과 미련을 느끼며 스스로를 성찰함", sit: "기회를 놓쳤거나 상처를 주었을 때", body: "가슴을치고 싶거나 머리를 감싸 쥐게 되며 속이 쓰림", aff: "과거의 실수에서 지혜를 배워 성장합니다." },
@@ -775,7 +777,7 @@ const emotionsData = [
     { name: "피곤하다", cat: "cat-sad", desc: "신체적, 정신적 한계를 초과하여 몸이 강력하게 휴식을 요청하는 고갈 신호", sit: "쉼 없이 달려와 모든 의욕이 사라질 때", body: "머리가 무겁고 눈이 따가우며 뒷목이 뻣뻣함", aff: "고생한 나에게 깊은 휴식을 선물합니다." },
     {"name": "지친다", "cat": "cat-sad", "desc": "긴 시간 동안의 노력이나 갈등으로 인해 마음의 탄력을 잃고, 더 이상 버틸 에너지가 남아있지 않은 상태", "sit": "해결되지 않는 문제를 계속 안고 있거나, 스스로에게 너무 엄격한 기준을 적용해왔을 때", "body": "어깨가 무겁게 처지고 한숨이 잦아지며, 무표정이 익숙해지고 감각이 무뎌짐", "aff": "충분히 애썼습니다. 이제는 아무것도 하지 않고 오롯이 나를 쉬게 할 때입니다." },
     { "name": "의욕이 없다", "cat": "cat-sad", "desc": "무언가를 시작하거나 성취하고 싶다는 내면의 동기가 완전히 사라져, 모든 일이 무의미하게 느껴지는 상태", "sit": "번아웃이 오거나, 반복된 실패로 인해 미래에 대한 기대가 희미해졌을 때", "body": "몸의 움직임이 느려지고 눈빛에 생기가 없으며, 시간의 흐름을 무감각하게 받아들임", "aff": "지금의 멈춤은 더 멀리 나아가기 위한 뿌리 내림입니다. 조급해하지 않아도 괜찮습니다." },  
-    { name: "부럽다", cat: "cat-sad", desc: "타인의 훌륭한 처지나 성취를 보며 자신의 감춰진 결핍이 자극되는 미묘한 마음", sit: "친구의 성공 소식을 보았을 때", body: "시선이 자꾸 아래로 향하고 가슴 한구석이 쿡쿡 쑤심", aff: "나에게는 나만의 고유한 행복이 이미 있습니다." },
+    { name: "부럽다", cat: "cat-sad", desc: "타인의 훌륭한 처지나 성취를 보며 자신의 감춰진 결핍이 자극되는 미묘 마음", sit: "친구의 성공 소식을 보았을 때", body: "시선이 자꾸 아래로 향하고 가슴 한구석이 쿡쿡 쑤심", aff: "나에게는 나만의 고유한 행복이 이미 있습니다." },
     { name: "괴롭다", cat: "cat-sad", desc: "신체적, 정신적 통증이나 고통이 극심하여 당장 그 상황에서 벗어나고픈 간절함", sit: "상처가 떠오르거나 현실이 힘들 때", body: "온몸의 근육이 뒤틀리는 듯하고 가슴이 찢어지는 통증", aff: "고통을 따뜻하게 안아주며 치유합니다." },
     { name: "그리워하다", cat: "cat-sad", desc: "지금은 곁에 없는 소중한 대상과의 추억을 떠올리며 다시 연결되고 싶은 상태", sit: "이별한 이의 유품이나 흔적을 볼 때", body: "가슴 부근이 아련하게 저리고 목소리가 떨림", aff: "그리움은 내가 사랑했다는 증거입니다." },
     { name: "실망하다", cat: "cat-sad", desc: "품었던 기대가 허무하게 무너지면서 상대에 대한 굳건한 신뢰가 흔들리는 상태", sit: "믿었던 이의 무심한 모습을 보았을 때", body: "몸에서 기운이 빠져나가며 입안이 마르는 느낌", aff: "실망은 환상이 걷힌 자리에 진실을 세우는 일입니다." },
@@ -1387,8 +1389,15 @@ async function makeWorkStep1Image() {
                     const content = ta.value.trim();
                     const d = clonedDoc.createElement('div');
                     d.style.cssText = "background:#fdfdfd; border:1px solid #cbd5e0; padding:35px; border-radius:15px; font-size:44px; line-height:1.6; color:#2c3e50; white-space:pre-wrap; margin-top:10px; margin-bottom:20px;";
-                    d.innerText = content ? content : "서술된 답변이 없습니다.";
-                    if(!content) d.style.color = "#ccc";
+                    
+                    if (content) {
+                        let safeContent = content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        d.innerHTML = safeContent.replace(/\[(.*?)\]/g, '<strong style="font-weight: 900; color: #1a252f;">[$1]</strong>');
+                    } else {
+                        d.innerText = "서술된 답변이 없습니다.";
+                        d.style.color = "#ccc";
+                    }
+                    
                     ta.replaceWith(d);
                 });
 
@@ -1398,6 +1407,7 @@ async function makeWorkStep1Image() {
                 clonedDoc.querySelectorAll('#capture-work-step1 .section-label').forEach(el => {
                     el.style.fontSize = '38px'; el.style.color = '#34495e'; el.style.marginTop = '30px';
                 });
+                clonedDoc.querySelectorAll('#capture-work-step1 button').forEach(btn => btn.style.display = 'none');
             }
         });
         canvas.toBlob(async (blob) => {
@@ -1450,8 +1460,15 @@ async function makeWorkStep2Image() {
                     const content = ta.value.trim();
                     const d = clonedDoc.createElement('div');
                     d.style.cssText = "background:#fdfdfd; border:1px solid #cbd5e0; padding:35px; border-radius:15px; font-size:44px; line-height:1.6; color:#2c3e50; white-space:pre-wrap; margin-top:10px; margin-bottom:20px;";
-                    d.innerText = content ? content : "기록된 심문 내역이 없습니다.";
-                    if(!content) d.style.color = "#ccc";
+                    
+                    if (content) {
+                        let safeContent = content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                        d.innerHTML = safeContent.replace(/\[(.*?)\]/g, '<strong style="font-weight: 900; color: #1a252f;">[$1]</strong>');
+                    } else {
+                        d.innerText = "기록된 심문 내역이 없습니다.";
+                        d.style.color = "#ccc";
+                    }
+                    
                     ta.replaceWith(d);
                 });
 
@@ -1539,6 +1556,32 @@ function stopWorkAudio() {
     activeAudioBtn = null;
 }
 
+/* --- 1단계 1번 질문 내용을 2단계로 복사하는 함수 --- */
+function copyWorkQ1ToStep2() {
+    const q1Value = document.getElementById("work-q1").value.trim();
+    
+    if (!q1Value) {
+        alert("1번 질문에 먼저 내용을 작성해주세요.");
+        return;
+    }
+
+    const ans1 = document.getElementById("work-ans1");
+    const ans2 = document.getElementById("work-ans2");
+
+    // 기존 내용이 있다면 줄바꿈 후 추가, 없다면 바로 입력
+    ans1.value = ans1.value.trim() ? ans1.value + "\n" + q1Value : q1Value;
+    ans2.value = ans2.value.trim() ? ans2.value + "\n" + q1Value : q1Value;
+
+    // 텍스트 박스 높이 자동 조절
+    autoResizeTextarea(ans1);
+    autoResizeTextarea(ans2);
+
+    // 데이터 로컬 저장
+    saveAllToLocal();
+
+    alert("2단계 질문 1과 질문 2 입력창에 내용이 추가되었습니다.");
+}
+
 /* ==========================================================================
    라이프사이클 및 이벤트 초기화 영역
    ========================================================================= */
@@ -1591,7 +1634,6 @@ window.onload = async function() {
     document.querySelectorAll('input[type="radio"]').forEach(r => {
         r.addEventListener("change", (e) => {
             saveAllToLocal();
-            // 질문 1번(work-check-q1)의 라디오 버튼이 클릭될 때만 toggleQuestion2 실행
             if (e.target.name === "work-check-q1") {
                 toggleQuestion2();
             }
@@ -1605,6 +1647,7 @@ window.onload = async function() {
     
     loadStep9Global();
 };
+
 /* --- Gemini 섹션 토글 기능 --- */
 function togglestep9() {
     const content = document.getElementById("step9-content");
@@ -1612,10 +1655,10 @@ function togglestep9() {
     
     if (content.style.display === "none" || content.style.display === "") {
         content.style.display = "block";
-        icon.innerText = "▼"; // 열렸을 때 아이콘 변경
+        icon.innerText = "▼";
     } else {
         content.style.display = "none";
-        icon.innerText = "▲"; // 닫혔을 때 아이콘 변경
+        icon.innerText = "▲";
     }
 }
 
