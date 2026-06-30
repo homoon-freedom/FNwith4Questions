@@ -496,9 +496,6 @@
         </div>
     </div>
 
-    <div style="padding: 0 15px; margin-top: 5px;">
-        <button class="copy-btn" style="background-color: var(--danger-red); font-weight: 800;" onclick="resetWorkFields()">🔄 해당 사건의 'The Work' 내용 초기화</button>
-    </div>
 </section>
 
 <div class="fixed-bottom-bar" id="fixedBottomBar">
@@ -1301,14 +1298,6 @@ function clearWorkFields() {
     document.querySelectorAll('input[name="work-check-q2"]').forEach(r => r.checked = false);
     
     toggleQuestion2(); // 초기화 시 질문 2 숨김 처리
-}
-
-function resetWorkFields() {
-    if(confirm("현재 보고 계신 사건의 The Work 성찰 내용 전체를 리셋할까요?")) {
-        clearWorkFields();
-        saveAllToLocal();
-        alert("리셋되었습니다.");
-    }
 }
 
 /* ==========================================================================
