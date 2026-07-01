@@ -414,7 +414,7 @@
         </div>
 
         <div class="record-card" style="border-top: 5px solid var(--work-primary);">
-            <div class="record-card-title">1단계: 6가지 판단 질문 (Judge-Your-Neighbor)</div>
+            <div class="record-card-title">1단계: 5가지 판단 질문 (Judge-Your-Neighbor)</div>
             <div class="record-card-desc">내 안의 고통이나 화를 가감 없이 양식에 맞춰 적어나가 보세요.</div>
             
             <span class="section-label">1. 당신을 화나게 하거나 슬프게 하는 사람은 누구인가요?</span>
@@ -504,9 +504,9 @@
 <div class="fixed-bottom-bar" id="fixedBottomBar">
     <button class="btn-save-local" onclick="triggerManualSave()">저장하기</button>
     
-    <button class="btn-image" id="shareBtn" onclick="makeImage()">❤️ 기록 이미지 공유</button>
-    <button class="btn-image btn-work-image btn-work-s1" id="shareWorkS1Btn" style="display:none;" onclick="makeWorkStep1Image()">💙 1단계 공유</button>
-    <button class="btn-image btn-work-image btn-work-s2" id="shareWorkS2Btn" style="display:none;" onclick="makeWorkStep2Image()">💚 2단계 공유</button>
+    <button class="btn-image" id="shareBtn" onclick="makeImage()">기록 이미지 공유</button>
+    <button class="btn-image btn-work-image btn-work-s1" id="shareWorkS1Btn" style="display:none;" onclick="makeWorkStep1Image()">1단계 공유</button>
+    <button class="btn-image btn-work-image btn-work-s2" id="shareWorkS2Btn" style="display:none;" onclick="makeWorkStep2Image()">2단계 공유</button>
     <button class="btn-refresh" onclick="location.reload()" title="새로고침">🔄</button>
 </div>
 
@@ -1383,7 +1383,7 @@ async function makeWorkStep1Image() {
                 if (headerTitle) {
                     const uName = document.getElementById("userSelect").value || "사용자";
                     const eName = document.getElementById("eventSelect").value || "사건";
-                    headerTitle.innerText = `The Work [1단계: 6가지 판단 질문] - (${uName} / ${eName})`;
+                    headerTitle.innerText = `The Work [1단계: 5가지 판단 질문] - (${uName} / ${eName})`;
                     headerTitle.style.cssText = "font-size:55px; font-weight:900; color:#2980b9; text-align:center; padding:20px; line-height:1.3;";
                 }
 
